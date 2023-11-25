@@ -4,7 +4,7 @@ import LoginForm from '../components/LoginForm'
 function Login() {
     return (
 
-        <div className='flex justify-center lg:mt-40' >
+        <div className='flex justify-center' >
             <LoginForm />
         </div>
 
