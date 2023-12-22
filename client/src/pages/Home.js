@@ -1,8 +1,13 @@
 import React from 'react'
+import BookCard from '../components/BookCard'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+
+      <BookCard />
+
+    </div>
   )
 }
 
