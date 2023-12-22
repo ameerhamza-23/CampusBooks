@@ -2,7 +2,7 @@ import Avatar from "./Avatar";
 
 export default function BookCard() {
   return (
-    <div className="w-76">
+    <div className="w-76 relative">
       <div className="w-76 h-64 overflow-hidden">
 
         <img src="images/book2.jpeg" alt="book image" className="w-full h-full object-cover" />
@@ -13,6 +13,9 @@ export default function BookCard() {
             <h1 className="font-bold">Rs 500</h1>
              <h1>logo</h1>
         </div>
+      </div>
+      <div className="absolute -top-5 -right-5">
+          <Avatar/>
       </div>
     </div>
 
