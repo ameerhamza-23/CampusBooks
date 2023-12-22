@@ -2,22 +2,19 @@ import Avatar from "./Avatar";
 
 export default function BookCard() {
   return (
-    <div className="w-80 h-64 relative">
-      <div className="img-div w-80 h-48 overflow-hidden">
-        <img src="images/book2.jpeg" alt="book image" className="w-full h-full object-cover" />
-      </div>
+    <div className="w-76">
+      <div className="w-76 h-64 overflow-hidden">
 
-      <div className="card-footer h-16 rounded-br-lg rounded-bl-lg flex justify-between text-center" style={{ backgroundColor: '#303134' }}>
-        <div className="h-full flex items-center px-4">
-          Rs 500
-        </div>
-        <div className="h-full flex items-center px-4">
-          logo
+        <img src="images/book2.jpeg" alt="book image" className="w-full h-full object-cover" />
+
+      </div >
+      <div>
+        <div className="flex justify-between p-4 text-lg rounded-bl-lg rounded-br-lg" style={{backgroundColor:'#303134'}}>
+            <h1 className="font-bold">Rs 500</h1>
+             <h1>logo</h1>
         </div>
       </div>
-      <div className="avatar absolute -top-5 -right-5">
-        <Avatar />
-      </div>
-    </div >
+    </div>
+
   )
 }
