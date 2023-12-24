@@ -4,8 +4,8 @@ function LoginForm() {
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   return (
-    <div className='form '> 
-            <div className='flex flex-col gap-4 items-center text-white'> 
+    <div className='form flex h-full items-center'> 
+            <div className='flex flex-col gap-4 items-center text-white pb-20'> 
                 <img src='/images/log.png' alt='login' width={200}></img>
                 <input style={isDarkMode ? {backgroundColor:'#303134', color:'white'} : {backgroundColor:'#e9e9e9',color:'black'}} type='email' placeholder='   Email' className='border-2 border-black rounded-md p-3 w-96'/>
                 <input style={isDarkMode ? {backgroundColor:'#303134',color:'white'} : {backgroundColor:'#e9e9e9',color:'black'}} type='password' placeholder='   Password' className='border-2 border-black rounded-md p-3 w-96'/>
