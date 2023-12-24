@@ -15,7 +15,7 @@ export default function Admin() {
         <p>/</p>
         <button className={`${underlineStyle}`} onClick={() => setTab("users")}>Users</button>
         <p>/</p>
-        <button className={`${underlineStyle}`} onClick={() => setTab("books")}>Admin</button>
+        <button className={`${underlineStyle}`} onClick={() => setTab("books")}>Books</button>
       </div>
 
       <div className='w-3/4 h-full rounded-lg mx-auto my-10 overflow-x-auto overflow-y-auto' style={{ backgroundColor: '#303134' }}>
