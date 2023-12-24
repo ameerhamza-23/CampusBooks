@@ -12,7 +12,7 @@ function App() {
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const body = document.body;
-  if(isDarkMode) {
+  if (isDarkMode) {
     body.style.backgroundColor = "#202124"
     body.style.color = "white"
   }
@@ -22,7 +22,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App m-4">
       <BrowserRouter>
         <Navbar />
         <Routes>
