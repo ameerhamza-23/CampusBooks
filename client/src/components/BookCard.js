@@ -11,8 +11,8 @@ export default function BookCard() {
   }
 
   return (
-    <div className="w-76 relative">
-      <div className="w-76 h-64 overflow-hidden">
+    <div className="w-56 relative">
+      <div className="w-56 h-64 overflow-hidden">
 
         <img src="images/book2.jpeg" alt="book image" className="w-full h-full object-cover" />
 
