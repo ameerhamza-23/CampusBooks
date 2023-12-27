@@ -7,7 +7,7 @@ function Home() {
   return (
     <div className='p-4'>
 
-      <div className='mt-4 flex justify-center items-center sm:justify-between'>
+      <div className='mt-4 flex justify-center gap-4 items-center sm:justify-between '>
         <SearchBar />
         <span><button className='border border-purple-500 lg:mr-5 rounded-full px-6 hover:bg-purple-500 py-2 flex items-center gap-2'>filter<IoFilter /></button></span>
       </div>
@@ -17,6 +17,9 @@ function Home() {
         <BookCard />
         <BookCard />
         <BookCard />
+        <BookCard />
+        <BookCard />
+
         <BookCard />
         <BookCard />
       </div>
