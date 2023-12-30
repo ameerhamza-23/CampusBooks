@@ -2,8 +2,9 @@ const pool = require("../db");
 const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
-    
+
     const {username, name, email, password} = req.body;
+    console.log('body: ',req.body);
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = `INSERT INTO users (username, name, email, password) VALUES ($1, $2, $3, $4) RETURNING id, username, name, email`;
