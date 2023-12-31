@@ -1,8 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import axios from "axios"
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {LineWave} from 'react-loader-spinner';
+import Loader from './Loader';
 
 function LoginForm() {
 
@@ -13,30 +15,31 @@ function LoginForm() {
 
   const navigate = useNavigate();
 
-  const handleLogin = async() => { 
-    
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    setLoading(true)
     try {
-      const {username, password} = user;
-      const newUser = await axios.post('http://localhost:4000/api/auth/login', {username, password});
+      const { username, password } = user;
+      const newUser = await axios.post('http://localhost:4000/api/auth/login', { username, password });
       console.log(newUser.data);
       navigate('/home');
     }
-    catch(err) {
+    catch (err) {
       console.log(err.message);
     }
-
-
+    setLoading(false);
   }
-  
+
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   return (
-    <div className='form flex h-full items-center'> 
-            <div className='flex flex-col gap-4 items-center text-white pb-20'> 
-                <img src='/images/log.png' alt='login' width={200}></img>
-                <input style={isDarkMode ? {backgroundColor:'#303134', color:'white'} : {backgroundColor:'#e9e9e9',color:'black'}} type='text' placeholder='   Username' className='border-2 border-black rounded-md p-3 w-96' onChange={(e) => setUser({...user, username:e.target.value})} value={user.username}/>
-                <input style={isDarkMode ? {backgroundColor:'#303134',color:'white'} : {backgroundColor:'#e9e9e9',color:'black'}} type='password' placeholder='   Password' className='border-2 border-black rounded-md p-3 w-96' onChange={(e) => setUser({...user, password:e.target.value})} value={user.password}/>
-                <button className='p-4 rounded-lg text-white font-bold w-96 bg-purple-600 hover:bg-purple-500 transition-all' style={{}} onClick={handleLogin}>Login</button>
-            </div>
+    <div className='form flex h-full items-center'>
+      <div className='flex flex-col gap-4 items-center text-white pb-20'>
+        <img src='/images/log.png' alt='login' width={200}></img>
+        <input style={isDarkMode ? { backgroundColor: '#303134', color: 'white' } : { backgroundColor: '#e9e9e9', color: 'black' }} type='text' placeholder='   Username' className='border-2 border-black rounded-md p-3 w-96' onChange={(e) => setUser({ ...user, username: e.target.value })} value={user.username} />
+        <input style={isDarkMode ? { backgroundColor: '#303134', color: 'white' } : { backgroundColor: '#e9e9e9', color: 'black' }} type='password' placeholder='   Password' className='border-2 border-black rounded-md p-3 w-96' onChange={(e) => setUser({ ...user, password: e.target.value })} value={user.password} />
+        <button className={loading ? 'rounded-lg text-white font-bold w-96 bg-purple-600 hover:bg-purple-500 transition-all justify-center' : 'p-4 rounded-lg text-white font-bold w-96 bg-purple-600 hover:bg-purple-500 transition-all justify-center'} style={{}} onClick={handleLogin}>{loading ? <Loader/> : 'Login'}</button>
+      </div>
     </div>
   )
 }
