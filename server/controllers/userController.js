@@ -40,7 +40,13 @@ const login = async (req, res) => {
     if (!validPassword) {
         return res.status(400).json({ error: 'Username or password is incorrect' });
     }
-    res.json(user);
+    const retUser = {
+        id: user.id,
+        username: user.username,
+        name: user.name,
+        email: user.email
+    }
+    res.json(retUser);
 }
 
 module.exports = { register, login };

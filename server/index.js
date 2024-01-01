@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/userRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
 
 app.listen(process.env.PORT || 4000, () => {
 
