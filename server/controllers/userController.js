@@ -1,4 +1,6 @@
 const pool = require("../db");
+const jwt = require('jsonwebtoken');
+const cookie = require('cookie');
 const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
@@ -40,12 +42,26 @@ const login = async (req, res) => {
     if (!validPassword) {
         return res.status(400).json({ error: 'Username or password is incorrect' });
     }
+
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Set the token in an HTTP-only cookie
+    res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3600000, // Expires in 1 hour (milliseconds)
+        sameSite: 'none',
+        secure:true,
+    });
+
+    console.log("token: ",token);
+
     const retUser = {
         id: user.id,
         username: user.username,
         name: user.name,
         email: user.email
     }
+
     res.json(retUser);
 }
 
