@@ -5,13 +5,13 @@ const refreshToken = async(req, res) => {
 
     const cookies = req.cookies;
     if(!cookies?.token) return res.sendStatus(401);
-    console.log(cookies.token)
     const refreshToken = cookies.token;
+    console.log("refresh token : ",refreshToken);
 
     const query = `SELECT * FROM users WHERE refreshtoken = $1`;
     const checkUserExists = await pool.query(query,[refreshToken]);
     if (!checkUserExists.rows.length > 0 ) {
-        return res.sendStatus(403)
+        return res.sendStatus(403);
     }   
     const user = checkUserExists.rows[0];
 
@@ -19,7 +19,10 @@ const refreshToken = async(req, res) => {
         refreshToken,
         process.env.JWT_SECRET,
         (err, decoded) => {
-            if(err || user.userId !== decoded.userId) return sendStatus(403);
+            if(err || user.id !== decoded.userId){
+                console.log("forbidden 2")
+                return res.sendStatus(403);
+            } 
             const accessToken = jwt.sign(
                 { userId: user.id, role:user.role },
                 process.env.JWT_SECRET,

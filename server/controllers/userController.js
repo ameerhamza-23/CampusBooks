@@ -68,7 +68,7 @@ const login = async (req, res) => {
         return res.status(400).json({ error: 'Username or password is incorrect' });
     }
 
-    const token = jwt.sign({ userId: user.id, role:user.role }, process.env.JWT_SECRET, { expiresIn: '15s' });
+    const token = jwt.sign({ userId: user.id, role:user.role }, process.env.JWT_SECRET, { expiresIn: '30s' });
 
     const refreshToken = jwt.sign(
         { userId: user.id, role:user.role }, process.env.JWT_SECRET, { expiresIn: '1d' }
@@ -83,11 +83,9 @@ const login = async (req, res) => {
     res.cookie('token', refreshToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // Expires in 1 hour (milliseconds)
-        sameSite: 'none',
-        secure:true,
     });
 
-    console.log("token: ",token);
+    console.log("access token: ",token);
 
     res.json({ token });
 }
