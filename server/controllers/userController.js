@@ -14,7 +14,7 @@ const register = async (req, res) => {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING id, username, name, email, role
     `;
-    const values = [username, name, email, hashedPassword, 'admin'];
+    const values = [username, name, email, hashedPassword, 'user'];
 
     try {
 
@@ -90,4 +90,27 @@ const login = async (req, res) => {
     res.json({ token });
 }
 
-module.exports = { register, login };
+const logout = async(req, res) => {
+
+    const cookies = req.cookies;
+    if(!cookies?.token) return res.sendStatus(204);
+    const refreshToken = cookies.token;
+
+    const query = `SELECT * FROM users WHERE refreshtoken = $1`;
+    const checkUserExists = await pool.query(query,[refreshToken]);
+    if (!checkUserExists.rows.length > 0 ) {
+        res.clearCookie('token', {httpOnly: true, naxAge: 24 * 60 * 60 * 1000});
+        return res.sendStatus(204);
+    }   
+    const user = checkUserExists.rows[0];
+    console.log("user with refresh token exists in the database");
+    const query2 = `UPDATE users SET refreshtoken = NULL WHERE id = $1 AND refreshtoken = $2;`;
+
+    await pool.query(query2, [user.id, user.refreshtoken]);
+
+    res.clearCookie('token', {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+    res.sendStatus(204);
+
+}
+
+module.exports = { register, login, logout };

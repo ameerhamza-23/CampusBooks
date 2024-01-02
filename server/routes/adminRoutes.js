@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const {getAllUsers} = require("../controllers/adminController");
-const verifyToken = require("../middleware/verifyToken");
+const verifyRole = require("../middleware/verifyRole");
 
 //protected routes
-router.get("/users",verifyToken,getAllUsers);
+router.get("/users",verifyRole('admin'),getAllUsers);
 
 module.exports = router;
