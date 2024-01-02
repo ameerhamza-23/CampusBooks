@@ -7,7 +7,7 @@ const getAllUsers = async (req, res) => {
 
         if(userRole === 'admin') {
             const allUsers = await pool.query('SELECT * FROM users');
-            res.status(200).json({message: "Welcome to admin dashboard", users: allUsers});
+            res.status(200).json({message: "Welcome to admin dashboard", users: allUsers.rows});
         }
         else {
             res.status(400).json({error:"cannot access this route"})
