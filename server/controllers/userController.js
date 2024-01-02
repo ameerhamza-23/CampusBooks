@@ -5,12 +5,16 @@ const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
 
-    const {username, name, email, password} = req.body;
+    const { username, name, email, password, role } = req.body;
     console.log('body: ',req.body);
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = `INSERT INTO users (username, name, email, password) VALUES ($1, $2, $3, $4) RETURNING id, username, name, email`;
-    const values = [username, name, email, hashedPassword];
+    const query = `
+        INSERT INTO users (username, name, email, password, role)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, username, name, email, role
+    `;
+    const values = [username, name, email, hashedPassword, role];
 
     try {
 
