@@ -5,8 +5,8 @@ const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
 
-    const { username, name, email, password, role } = req.body;
-    console.log('body: ',req.body);
+    const { username, name, email, password} = req.body;
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = `
@@ -14,7 +14,7 @@ const register = async (req, res) => {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING id, username, name, email, role
     `;
-    const values = [username, name, email, hashedPassword, role];
+    const values = [username, name, email, hashedPassword, 'user'];
 
     try {
 
@@ -25,7 +25,28 @@ const register = async (req, res) => {
         }
 
         const newUser = await pool.query(query, values);
-        res.json(newUser.rows[0]);
+        const user = newUser.rows[0];
+
+        const token = jwt.sign({ userId: user.id, role:user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Set the token in an HTTP-only cookie
+    res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3600000, // Expires in 1 hour (milliseconds)
+        sameSite: 'none',
+        secure:true,
+    });
+
+    console.log("token: ",token);
+
+    const retUser = {
+        id: user.id,
+        username: user.username,
+        name: user.name,
+        email: user.email
+    }
+    res.json(retUser);
+    
     }
     catch(err) {
         console.log(err.message);
