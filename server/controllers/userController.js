@@ -45,7 +45,7 @@ const register = async (req, res) => {
         name: user.name,
         email: user.email
     }
-    res.json(retUser);
+    res.json({token});
 
     }
     catch(err) {
@@ -83,11 +83,19 @@ const login = async (req, res) => {
     res.cookie('token', refreshToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // Expires in 1 hour (milliseconds)
+        sameSite:'none'
     });
 
     console.log("access token: ",token);
+    const retUser = {
+        id: user.id,
+        name: user.name,
+        role: user.role
+    }
 
-    res.json({ token });
+    console.log("refresh token: ",refreshToken);
+
+    res.json({ token, retUser });
 }
 
 const logout = async(req, res) => {
