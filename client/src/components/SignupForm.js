@@ -20,8 +20,9 @@ export default function SignupForm() {
    
     try {
       const {username, name, email, password} = user;
-      const newUser = await axios.post('http://localhost:4000/api/auth/register', {username, name, email, password});
+      const newUser = await axios.post('http://localhost:4000/api/auth/register', {username, name, email, password}, { withCredentials:true });
       console.log(newUser.data);
+      console.log("access token at frontend: ",newUser);
       navigate('/home');
     }
     catch(err) {

@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {LineWave} from 'react-loader-spinner';
 import Loader from './Loader';
+import { setAuthData } from '../store/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 function LoginForm() {
 
@@ -12,6 +14,8 @@ function LoginForm() {
     username: '',
     password: '',
   });
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -21,8 +25,15 @@ function LoginForm() {
     setLoading(true)
     try {
       const { username, password } = user;
-      const newUser = await axios.post('http://localhost:4000/api/auth/login', { username, password });
-      console.log(newUser.data);
+      const response = await axios.post('http://localhost:4000/api/auth/login', { username, password }, {withCredentials: true});
+      const userData = {
+        id:response.data.retUser.id,
+        name:response.data.retUser.name,
+        role:response.data.retUser.role,
+        token: response.data.token
+      }
+      console.log("data: ",userData)
+      // dispatch(setAuthData(userData));
       navigate('/home');
     }
     catch (err) {
