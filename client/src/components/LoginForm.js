@@ -7,6 +7,8 @@ import {LineWave} from 'react-loader-spinner';
 import Loader from './Loader';
 import { setAuthData } from '../store/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import { setCredentials } from '../features/auth/authSlice'
+import { useLoginMutation } from '../features/auth/authApiSlice';
 
 function LoginForm() {
 
@@ -21,20 +23,29 @@ function LoginForm() {
 
   const [loading, setLoading] = useState(false);
 
+  const [login] = useLoginMutation()
+
   const handleLogin = async () => {
     setLoading(true)
     try {
-      const { username, password } = user;
-      const response = await axios.post('http://localhost:4000/api/auth/login', { username, password }, {withCredentials: true});
-      const userData = {
-        id:response.data.retUser.id,
-        name:response.data.retUser.name,
-        role:response.data.retUser.role,
-        token: response.data.token
-      }
-      console.log("data: ",userData)
-      // dispatch(setAuthData(userData));
+      // const { username, password } = user;
+      // const response = await axios.post('http://localhost:4000/api/auth/login', { username, password }, {withCredentials: true});
+      // const userData = {
+      //   id:response.data.retUser.id,
+      //   name:response.data.retUser.name,
+      //   role:response.data.retUser.role,
+      //   token: response.data.token
+      // }
+      // console.log("data: ",userData)
+      // // dispatch(setAuthData(userData));
+      // navigate('/home');
+      ; 
+      const userData = await login({ ...user}).unwrap()
+      console.log("login result: ",userData)
+      dispatch(setCredentials({token: userData.token, user: userData.retUser}));
+      setUser({username: '', password: ''});
       navigate('/home');
+
     }
     catch (err) {
       console.log(err.message);
