@@ -11,6 +11,10 @@ import Profile from './pages/Profile';
 import Layout from './components/Layout';
 import RequireAuth from './features/auth/RequireAuth';
 
+import { PersistGate } from 'redux-persist/integration/react';
+
+import store, { persistor } from './store/configureStore';
+
 function App() {
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
@@ -43,6 +47,7 @@ function App() {
 
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/admin" element={<Admin />} />
 
             </Route>
 
