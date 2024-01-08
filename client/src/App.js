@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Profile from './pages/Profile';
+import Layout from './components/Layout';
+import RequireAuth from './features/auth/RequireAuth';
 
 function App() {
 
@@ -27,12 +29,24 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<Layout />}>
+
+            {/* public routes */}
+
+            <Route index element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+
+            {/* private routes */}
+
+            <Route element={<RequireAuth />} >
+
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+
+            </Route>
+
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

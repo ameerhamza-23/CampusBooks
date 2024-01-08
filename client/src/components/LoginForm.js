@@ -7,7 +7,7 @@ import {LineWave} from 'react-loader-spinner';
 import Loader from './Loader';
 import { setAuthData } from '../store/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import { setCredentials } from '../features/auth/authSlice'
+import { selectCurrentToken, setCredentials } from '../features/auth/authSlice'
 import { useLoginMutation } from '../features/auth/authApiSlice';
 
 function LoginForm() {
@@ -23,7 +23,7 @@ function LoginForm() {
 
   const [loading, setLoading] = useState(false);
 
-  const [login] = useLoginMutation()
+  const [login] = useLoginMutation();
 
   const handleLogin = async () => {
     setLoading(true)
@@ -41,8 +41,15 @@ function LoginForm() {
       // navigate('/home');
       ; 
       const userData = await login({ ...user}).unwrap()
-      console.log("login result: ",userData)
-      dispatch(setCredentials({token: userData.token, user: userData.retUser}));
+      const authData = {
+        user: {
+          id: userData.retUser.id,
+          name: userData.retUser.name,
+          role: userData.retUser.role
+        },
+        accessToken: userData.token
+      }
+      dispatch(setCredentials(authData));
       setUser({username: '', password: ''});
       navigate('/home');
 
