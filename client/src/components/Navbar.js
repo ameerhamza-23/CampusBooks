@@ -2,12 +2,22 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { WiDaySunny, WiMoonWaningCrescent5 } from 'react-icons/wi'
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from '../store/themeSlice';
+import { toggleTheme } from '../features/theme/themeSlice';
+//import { selectCurrentToken } from '../features/auth/authSlice';
+import { selectCurrentUser } from '../features/auth/authSlice';
 
 function Navbar() {
 
+  const handleLogout = () => {
+
+    console.log("logout")
+
+  }
+
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+  // const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
 
   const changeTheme = () => {
     dispatch(toggleTheme());

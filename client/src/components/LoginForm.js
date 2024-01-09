@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {LineWave} from 'react-loader-spinner';
 import Loader from './Loader';
-import { setAuthData } from '../store/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { selectCurrentToken, setCredentials } from '../features/auth/authSlice'
 import { useLoginMutation } from '../features/auth/authApiSlice';
