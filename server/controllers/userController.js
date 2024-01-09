@@ -83,17 +83,14 @@ const login = async (req, res) => {
     res.cookie('token', refreshToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // Expires in 1 hour (milliseconds)
-        sameSite:'none'
     });
 
-    console.log("access token: ",token);
     const retUser = {
         id: user.id,
         name: user.name,
         role: user.role
     }
 
-    console.log("refresh token: ",refreshToken);
 
     res.json({ token, retUser });
 }
@@ -101,7 +98,9 @@ const login = async (req, res) => {
 const logout = async(req, res) => {
 
     const cookies = req.cookies;
-    if(!cookies?.token) return res.sendStatus(204);
+    if(!cookies?.token) {
+        return res.sendStatus(204);
+    }
     const refreshToken = cookies.token;
 
     const query = `SELECT * FROM users WHERE refreshtoken = $1`;
@@ -111,7 +110,6 @@ const logout = async(req, res) => {
         return res.sendStatus(204);
     }   
     const user = checkUserExists.rows[0];
-    console.log("user with refresh token exists in the database");
     const query2 = `UPDATE users SET refreshtoken = NULL WHERE id = $1 AND refreshtoken = $2;`;
 
     await pool.query(query2, [user.id, user.refreshtoken]);
