@@ -7,6 +7,7 @@ import { toggleTheme } from '../features/theme/themeSlice';
 import { selectCurrentUser } from '../features/auth/authSlice';
 import { useLogoutMutation } from '../features/auth/authApiSlice';
 import { setCredentials } from '../features/auth/authSlice';
+import Avatar from './Avatar'
 
 function Navbar() {
 
@@ -14,11 +15,11 @@ function Navbar() {
   const [logout] = useLogoutMutation();
 
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
 
     const result = await logout().unwrap();
-    console.log("result: ",result);
-    dispatch(setCredentials({user: null, accessToken: null}));
+    console.log("result: ", result);
+    dispatch(setCredentials({ user: null, accessToken: null }));
 
   }
 
@@ -32,17 +33,18 @@ function Navbar() {
 
   return (
     <div className='flex justify-end items-end h-20 font-semibold'>
-      <ul className='grid grid-cols-3 gap-5 text-white mr-10'>
-        <span className='flex items-end justify-center hover:cursor-pointer transform hover:rotate-90 transition duration-300' onMouseDown={changeTheme}>
+      <ul className={!user ? 'grid grid-cols-3 gap-5 text-white mr-10' :' grid grid-cols-2 gap-5 text-white mr-10'  }>
+        <span className='flex items-center justify-center hover:cursor-pointer' onMouseDown={changeTheme}>
           {isDarkMode ? <WiDaySunny size={30} /> : <WiMoonWaningCrescent5 size={30} color='black' />}
         </span>
         {user ? (  // Check if the user is logged in
-          <>
-            <button className='text-center border-2 border-purple-500 px-3 py-1 hover:bg-purple-500 transition' onClick={handleLogout}>
-              {isDarkMode ? <span className='text-white'>Logout</span> : <span className='text-black hover:text-white'>Logout</span>}
-            </button>
-            {/* Add any additional logged-in user content or navigation items */}
-          </>
+
+            <div className=''> 
+                  <Avatar />
+            </div>
+          
+
+          
         ) : (
           <>
             <Link to="/login" className='text-center border-2 border-purple-500 px-3 py-1 hover:bg-purple-500 transition'>
