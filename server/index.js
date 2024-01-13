@@ -18,6 +18,7 @@ app.use("/api/auth", require("./routes/userRoutes"));
 app.use("/refresh",require("./routes/refreshToken"));
 app.use(verifyToken);
 app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/books", require("./routes/bookRoutes"));
 
 
 app.listen(process.env.PORT || 4000, () => {
