@@ -8,6 +8,8 @@ import { selectCurrentUser } from '../features/auth/authSlice';
 import { useLogoutMutation } from '../features/auth/authApiSlice';
 import { setCredentials } from '../features/auth/authSlice';
 import Avatar from './Avatar'
+import testAvatar from './testAvatar';
+import Test from './test';
 
 function Navbar() {
 
@@ -40,7 +42,7 @@ function Navbar() {
         {user ? (  // Check if the user is logged in
 
             <div className=''> 
-                  <Avatar />
+                  <Test />
             </div>
           
 
