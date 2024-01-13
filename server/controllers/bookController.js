@@ -1,4 +1,4 @@
-//create book controller
+//create book
 const createBook = async (req, res) => { 
     try {
         const { name, author, price, description, image,uID } = req.body;
@@ -6,6 +6,18 @@ const createBook = async (req, res) => {
         const values = [name, author, price, description, image, uID];
         const newBook = await pool.query(query, values);
         res.json(newBook.rows[0]);
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+//delete book
+const deleteBook = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const query = `DELETE FROM books WHERE id = $1 RETURNING *`;
+        const deletedBook = await pool.query(query, [id]);
+        res.json(deletedBook.rows[0]);
     } catch (err) {
         console.log(err.message);
     }
