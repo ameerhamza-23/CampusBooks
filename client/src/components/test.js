@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLogoutMutation } from '../features/auth/authApiSlice';
+import { setCredentials } from '../features/auth/authSlice';
 
 export default function Test() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -6,6 +9,18 @@ export default function Test() {
     const handleToggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
+
+    const dispatch = useDispatch();
+    const [logout] = useLogoutMutation();
+
+
+    const handleLogout = async () => {
+
+        const result = await logout().unwrap();
+        console.log("result: ", result);
+        dispatch(setCredentials({ user: null, accessToken: null }));
+
+    }
 
     return (
         <div className="relative inline-block">
@@ -17,7 +32,7 @@ export default function Test() {
             >
                 <span className="sr-only">Open user menu</span>
                 <img
-                    className="w-8 h-8 rounded-full"
+                    className="w-10 h-10 rounded-full"
                     src="images/prof.jpg"
                     alt="user"
                 />
@@ -43,7 +58,7 @@ export default function Test() {
                     </li>
                 </ul>
                 <div className="py-2">
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    <button onClick={handleLogout} className="block px-4 py-2 text-start text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full">Sign out</button>
                 </div>
             </div>
         </div>
