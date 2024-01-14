@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Layout from './components/Layout';
 import RequireAuth from './features/auth/RequireAuth';
 import Wishlist from './pages/Wishlist'
+import BookDetails from './pages/BookDetail';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import Book from './pages/Book';
@@ -50,6 +51,7 @@ function App() {
               <Route path="/book" element={<Book />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="bookdetails/:id" element={<BookDetails />} />
 
             </Route>
 
