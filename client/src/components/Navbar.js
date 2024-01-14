@@ -20,10 +20,10 @@ function Navbar() {
   const handleLogout = async () => {
 
     const result = await logout().unwrap();
-    console.log("result: ", result);
     dispatch(setCredentials({ user: null, accessToken: null }));
-
   }
+
+  const loggedInUser = useSelector((state) => state.auth.user)
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   // const token = useSelector(selectCurrentToken);
