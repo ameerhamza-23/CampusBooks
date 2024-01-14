@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLogoutMutation } from '../features/auth/authApiSlice';
 import { setCredentials } from '../features/auth/authSlice';
 import {TailSpin} from 'react-loader-spinner'
+import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
+import { useEffect } from 'react';
 
 export default function Test() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -10,6 +13,7 @@ export default function Test() {
     const handleToggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
+    const navigate = useNavigate()
 
     const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
@@ -27,6 +31,12 @@ export default function Test() {
         dispatch(setCredentials({ user: null, accessToken: null }));
 
     }
+
+    useEffect(() => {
+        // Close the dropdown when the user navigates to a new page
+        setDropdownOpen(false);
+        console.log('Dropdown closed due to navigation');
+      }, [navigate]);
 
     return (
         <div className="relative inline-block">
@@ -54,13 +64,10 @@ export default function Test() {
                 </div>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                     <li>
-                        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                        <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
                     </li>
                     <li>
-                        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                    </li>
-                    <li>
-                        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                        <Link to="/wishlist" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Wishlist</Link>
                     </li>
                 </ul>
                 <div className={ loading ? "flex text-center justify-center py-2" : "py-2"}>

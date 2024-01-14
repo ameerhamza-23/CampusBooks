@@ -23,8 +23,6 @@ function Navbar() {
     dispatch(setCredentials({ user: null, accessToken: null }));
   }
 
-  const loggedInUser = useSelector((state) => state.auth.user)
-
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   // const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
