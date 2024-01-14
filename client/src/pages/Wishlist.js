@@ -1,5 +1,6 @@
 import { MdDelete } from 'react-icons/md'
 import React from 'react'
+import BookCover from '../components/BookCover'
 
 function Wishlist() {
   return (
@@ -24,7 +25,7 @@ function Wishlist() {
           <tbody>
             <tr className="text-center">
               <td className="py-6 px-4 border-b">1</td>
-              <td className="py-6 px-4 border-b"></td>
+              <td className="py-6 px-4 border-b"> <BookCover /></td>
               <td className="py-6 px-4 border-b">John Doe</td>
               <td className="py-6 px-4 border-b">john.doe@example.com</td>
               <td className="py-6 px-4 border-b">+923014734130</td>
