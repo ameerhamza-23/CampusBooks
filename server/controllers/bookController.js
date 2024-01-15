@@ -1,9 +1,11 @@
+const pool = require("../db");
+
 //create book
 const createBook = async (req, res) => { 
     try {
-        const { name, author, price, condition, uID } = req.body;
-        const query = `INSERT INTO book_details (name, author, price, condition, uID) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-        const values = [name, author, price, condition, uID];
+        const { name, author, price, condition, uID, edition, semester, subject } = req.body;
+        const query = `INSERT INTO book_details (name, author, price, condition, uID, edition, semester, subject) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+        const values = [name, author, price, condition, uID, edition, semester, subject];
         const newBook = await pool.query(query, values);
         console.log("new book inserted : ",newBook.rows[0]);
         return res.json({message: "Book created successfully"});
