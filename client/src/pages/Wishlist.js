@@ -3,12 +3,13 @@ import React from 'react'
 import BookCover from '../components/BookCover'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { useGetWishlistMutation } from '../features/book/bookApiSlice';
+import { useGetWishlistMutation, useRemoveFromWishlistMutation } from '../features/book/bookApiSlice';
 import { TailSpin } from 'react-loader-spinner';
 
 function Wishlist() {
 
   const [getWishlist] = useGetWishlistMutation()
+  const [removeFromWishlist] = useRemoveFromWishlistMutation()
   const [loading, setLoading] = useState(false)
   const userid = useSelector((state) => state.auth.user.id)
   const [books, setBooks] = useState([])
@@ -31,6 +32,10 @@ function Wishlist() {
     getWS()
 
   }, [])
+
+  const removeFromWS = async(bid)=> {
+      console.log("book id: ",bid)
+  }
 
   return (
     <div className='p-10 flex flex-col items-center' style={{ height: '87vh' }}>
@@ -56,12 +61,12 @@ function Wishlist() {
                 <tr className="text-center">
                   <td className="py-6 px-4 border-b">{book.bid}</td>
                   <td className="py-6 px-4 border-b"> <BookCover /></td>
-                  <td className="py-6 px-4 border-b">{book.name}</td>
+                  <td className="py-6 px-4 border-b">{book.book_name}</td>
                   <td className="py-6 px-4 border-b">{book.author}</td>
                   <td className="py-6 px-4 border-b">{book.price}</td>
                   <td className="py-6 px-4 border-b">{book.subject}</td>
                   <td className="py-6 px-4 border-b">{book.semester}</td>
-                  <td className="py-6 px-4 border-b"><button><MdDelete size={25} /></button></td>
+                  <td className="py-6 px-4 border-b"><button onClick={removeFromWS(book.bid)}><MdDelete size={25} /></button></td>
                 </tr>
               ))}
             </tbody>
