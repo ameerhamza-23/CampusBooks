@@ -84,7 +84,7 @@ const login = async (req, res) => {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // Expires in 1 hour (milliseconds)
     });
-
+    
     const retUser = {
         id: user.id,
         name: user.name,

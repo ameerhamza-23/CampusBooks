@@ -55,10 +55,10 @@ const removeFromWishlist = async (req, res) => {
     }
 };
 
-// get wishlist
 const getWishlist = async (req, res) => {
     try {
-        const { uID } = req.body;
+        const { uID } = req.query; // Use req.query to get parameters from the URL
+        console.log("uID :", uID);
         const query = `
             SELECT w.*, bd.name AS book_name, bd.author, bd.price, bd.condition, bd.edition, bd.semester, bd.subject
             FROM wishlist w
@@ -67,6 +67,7 @@ const getWishlist = async (req, res) => {
         `;
         const values = [uID];
         const wishlistWithDetails = await pool.query(query, values);
+        console.log("result in backend: ", wishlistWithDetails.rows);
         return res.json(wishlistWithDetails.rows);
     } catch (err) {
         console.log(err.message);
