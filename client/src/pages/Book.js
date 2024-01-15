@@ -1,8 +1,11 @@
 import BookImage from '../components/BookImage';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useUploadBookMutation } from '../features/book/bookApiSlice';
 
 export default function Book() {
+
+    const [uploadBook] = useUploadBookMutation()
 
     const [inputData, setInputData] = useState({
         name: "",
@@ -11,13 +14,16 @@ export default function Book() {
         price: "",
         edition: "",
         semester: "",
-        subject: ""
+        subject: "",
+        uID:useSelector((state) => state.auth.user.id)
     })
 
     const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-
+    const userid = useSelector((state) => state.auth.user)
     const handleSubmit = async () => {
-        console.log("input data: ", inputData)
+        
+        const data = await uploadBook({...inputData}).unwrap()
+        console.log("respoonse: :",data);
     }
 
     return (
