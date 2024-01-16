@@ -44,7 +44,7 @@ const addToWishlist = async (req, res) => {
 // remove from wishlist
 const removeFromWishlist = async (req, res) => {
     try {
-        const { bID, uID } = req.body;
+        const { bID, uID } = req.query;
         const query = `DELETE FROM wishlist WHERE bID = $1 AND uID = $2 RETURNING *`;
         const values = [bID, uID];
         const result = await pool.query(query, values);
@@ -58,7 +58,6 @@ const removeFromWishlist = async (req, res) => {
 const getWishlist = async (req, res) => {
     try {
         const { uID } = req.query; // Use req.query to get parameters from the URL
-        console.log("uID :", uID);
         const query = `
             SELECT w.*, bd.name AS book_name, bd.author, bd.price, bd.condition, bd.edition, bd.semester, bd.subject
             FROM wishlist w
@@ -67,7 +66,6 @@ const getWishlist = async (req, res) => {
         `;
         const values = [uID];
         const wishlistWithDetails = await pool.query(query, values);
-        console.log("result in backend: ", wishlistWithDetails.rows);
         return res.json(wishlistWithDetails.rows);
     } catch (err) {
         console.log(err.message);

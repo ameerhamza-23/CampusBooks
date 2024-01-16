@@ -19,4 +19,23 @@ const getAllUsers = async (req, res) => {
     }
 }
 
-module.exports = { getAllUsers };
+const getAllBooks = async (req,res) => {
+    try {
+
+        const userRole = req.user.role;
+
+        if(userRole === 'admin') {
+            const allBooks = await pool.query('SELECT * FROM book_details');
+            res.status(200).json({message: "Welcome to admin dashboard", books: allBooks.rows});
+        }
+        else {
+            res.status(400).json({error:"cannot access this route"})
+        }
+
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+}
+
+module.exports = { getAllUsers, getAllBooks };
