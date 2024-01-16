@@ -27,7 +27,6 @@ export default function Test() {
         setLoading(true);
         const result = await logout().unwrap();
         setLoading(false);
-        console.log("result: ", result);
         dispatch(setCredentials({ user: null, accessToken: null }));
 
     }
@@ -35,7 +34,6 @@ export default function Test() {
     useEffect(() => {
         // Close the dropdown when the user navigates to a new page
         setDropdownOpen(false);
-        console.log('Dropdown closed due to navigation');
       }, [navigate]);
 
     return (

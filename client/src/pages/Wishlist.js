@@ -25,7 +25,6 @@ function Wishlist() {
       const result = await getWishlist({ ...data }).unwrap()
       setBooks(result)
       setLoading(false)
-      console.log("result: ", result)
 
     }
 
@@ -33,8 +32,15 @@ function Wishlist() {
 
   }, [])
 
-  const removeFromWS = async(bid)=> {
-      console.log("book id: ",bid)
+  const removeFromWS = async (bid) => {
+    try {
+      await removeFromWishlist({ bID: bid, uID:userid }).unwrap();
+
+      const updatedWishlist = await getWishlist({ ...data }).unwrap();
+      setBooks(updatedWishlist);
+    } catch (error) {
+      console.error("Error removing book:", error);
+    }
   }
 
   return (
@@ -66,7 +72,7 @@ function Wishlist() {
                   <td className="py-6 px-4 border-b">{book.price}</td>
                   <td className="py-6 px-4 border-b">{book.subject}</td>
                   <td className="py-6 px-4 border-b">{book.semester}</td>
-                  <td className="py-6 px-4 border-b"><button onClick={removeFromWS(book.bid)}><MdDelete size={25} /></button></td>
+                  <td className="py-6 px-4 border-b"><button onClick={() => removeFromWS(book.bid)}><MdDelete size={25} /></button></td>
                 </tr>
               ))}
             </tbody>

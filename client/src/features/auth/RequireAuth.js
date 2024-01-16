@@ -6,7 +6,6 @@ export default function RequireAuth() {
 
     const token = useSelector(selectCurrentToken);
     const location = useLocation();
-    console.log("token: ",token);
 
     return (
         token
