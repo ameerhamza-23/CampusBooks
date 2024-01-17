@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const { createBook, deleteBook, addToWishlist, removeFromWishlist, getWishlist } = require("../controllers/bookController");
+const { createBook, deleteBook, addToWishlist, removeFromWishlist, getWishlist, getAllBooks } = require("../controllers/bookController");
 
+router.get("/",getAllBooks);
 router.post("/create", createBook);
 router.delete("/delete/:id", deleteBook); 
 

@@ -30,7 +30,7 @@ const deleteBook = async (req, res) => {
 // add to wishlist
 const addToWishlist = async (req, res) => {
     try {
-        const { bID, uID } = req.body;
+        const { bID, uID } = req.query;
         const query = `INSERT INTO wishlist (bID, uID) VALUES ($1, $2) RETURNING *`;
         const values = [bID, uID];
         const result = await pool.query(query, values);
@@ -73,5 +73,17 @@ const getWishlist = async (req, res) => {
     }
 };
 
+const getAllBooks = async (req, res) => {
+    try {
 
-module.exports = { createBook, deleteBook, addToWishlist, removeFromWishlist, getWishlist };
+        const allBooks = await pool.query('SELECT * FROM book_details');
+        return res.status(200).json(allBooks.rows);
+
+    }
+    catch (err) {
+        console.log(err.message)
+        return res.status(500).json({ error: "internal server error" })
+    }
+}
+
+module.exports = { createBook, deleteBook, addToWishlist, removeFromWishlist, getWishlist, getAllBooks };
