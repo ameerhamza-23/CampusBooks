@@ -1,8 +1,33 @@
 import Avatar from "../Avatar"
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { useGetAllBooksMutation } from "../../features/admin/adminApiSlice";
+import { useEffect, useState } from "react";
 
 export default function Books() {
+
+  const [getAllBooks] = useGetAllBooksMutation()
+  const [books, setBooks] = useState([])
+
+  useEffect(() => {
+
+    const getBooks = async () => {
+
+      try {
+
+        const result = await getAllBooks().unwrap()
+        console.log(result)
+        setBooks(result)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+
+    getBooks()
+
+  }, [])
+
   return (
 
 
@@ -27,20 +52,25 @@ export default function Books() {
             </tr>
           </thead>
           <tbody>
-            <tr className="text-center">
-              <td className="py-2 px-4 border-b">1</td>
-              <td className="py-2 px-4 border-b"><Avatar /></td>
-              <td className="py-2 px-4 border-b">Algorithms</td>
-              <td className="py-2 px-4 border-b">Tahir Ejaz</td>
-              <td className="py-2 px-4 border-b">Computing</td>
-              <td className="py-4 px-4 border-b">Rs 500</td>
-              <td className="py-4 px-4 border-b">New</td>
-              <td className="py-2 px-4 border-b">Avaliable</td>
-              <td className="py-2 px-4 border-b">Hamza</td>
-              <td className="py-2 px-4 border-b">23-11-2001</td>
-              <td className="py-2 px-4 border-b"><button><MdModeEdit size={25} /></button></td>
-              <td className="py-2 px-4 border-b"><button><MdDelete size={25} /></button></td>
-            </tr>
+
+            {books && books.map((book) => (
+              <tr className="text-center">
+                <td className="py-2 px-4 border-b">{book.bid}</td>
+                <td className="py-2 px-4 border-b"><Avatar /></td>
+                <td className="py-2 px-4 border-b">{book.name}</td>
+                <td className="py-2 px-4 border-b">{book.author}</td>
+                <td className="py-2 px-4 border-b">{book.program}</td>
+                <td className="py-4 px-4 border-b">{book.price}</td>
+                <td className="py-4 px-4 border-b">New</td>
+                <td className="py-2 px-4 border-b">Avaliable</td>
+                <td className="py-2 px-4 border-b">Hamza</td>
+                <td className="py-2 px-4 border-b">23-11-2001</td>
+                <td className="py-2 px-4 border-b"><button><MdModeEdit size={25} /></button></td>
+                <td className="py-2 px-4 border-b"><button><MdDelete size={25} /></button></td>
+              </tr>
+            ))}
+
+
           </tbody>
         </table>
       </div>
