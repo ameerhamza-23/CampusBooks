@@ -50,5 +50,6 @@ export const {
   useDeleteBookMutation,
   useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
-  useGetWishlistMutation
+  useGetWishlistMutation,
+  useGetAllBooksMutation
 } = bookApiSlice;

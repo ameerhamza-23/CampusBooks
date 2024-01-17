@@ -1,10 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BookCard from '../components/BookCard'
 import SearchBar from '../components/SearchBar'
 import { IoFilter } from "react-icons/io5";
 import { Link } from 'react-router-dom';
+import {useGetAllBooksMutation} from "../features/book/bookApiSlice"
+import { useState } from 'react';
 
 function Home() {
+
+  const [getAllBooks] = useGetAllBooksMutation()
+  const [books, setBooks] = useState([])
+  
+
+  useEffect(()=> {
+    
+    const getBooks = async ()=> {
+      try {
+  
+        const result = await getAllBooks().unwrap()
+        console.log("result : ",result)
+        setBooks(result)
+        console.log(books);
+  
+      }
+      catch(err) {
+        console.log("error occured")
+      }
+    }
+
+    getBooks()
+
+  },[])
+
   return (
     <div className='p-4'>
 
@@ -24,14 +51,10 @@ function Home() {
 
       <div className='mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10'>
 
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
+        {books && books.map((book)=> (
+             <BookCard book={book} key={book.bid}/>
+        )  )}
 
-        <BookCard />
-        <BookCard />
       </div>
 
 
