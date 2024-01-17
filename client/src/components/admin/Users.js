@@ -1,8 +1,31 @@
 import Avatar from "../Avatar"
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { useGetAllUsersMutation } from "../../features/admin/adminApiSlice";
+import { useEffect, useState } from "react";
 
 export default function Users() {
+
+  const [getAllUsers] = useGetAllUsersMutation()
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+
+    const getUsers = async () => {
+      try {
+        const result = await getAllUsers().unwrap()
+        setUsers(result)
+        console.log(result)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+
+    getUsers()
+
+  }, [])
+
   return (
 
 
@@ -26,19 +49,24 @@ export default function Users() {
             </tr>
           </thead>
           <tbody>
-            <tr className="text-center">
-              <td className="py-2 px-4 border-b">1</td>
-              <td className="py-2 px-4 border-b"><Avatar /></td>
-              <td className="py-2 px-4 border-b">John Doe</td>
-              <td className="py-2 px-4 border-b">john.doe@example.com</td>
-              <td className="py-2 px-4 border-b">+923014734130</td>
-              <td className="py-2 px-4 border-b">+FAST</td>
-              <td className="py-2 px-4 border-b">Lahore</td>
-              <td className="py-2 px-4 border-b">Active</td>
-              <td className="py-2 px-4 border-b">23-11-2001</td>
-              <td className="py-2 px-4 border-b"><button><MdModeEdit size={25} /></button></td>
-              <td className="py-2 px-4 border-b"><button><MdDelete size={25} /></button></td>
-            </tr>
+
+            {users.map((user) => (
+              <tr className="text-center">
+                <td className="py-2 px-4 border-b">{user.id}</td>
+                <td className="py-2 px-4 border-b"><Avatar /></td>
+                <td className="py-2 px-4 border-b">{user.name}</td>
+                <td className="py-2 px-4 border-b">{user.username}</td>
+                <td className="py-2 px-4 border-b">user.phone</td>
+                <td className="py-2 px-4 border-b">+FAST</td>
+                <td className="py-2 px-4 border-b">Lahore</td>
+                <td className="py-2 px-4 border-b">Active</td>
+                <td className="py-2 px-4 border-b">23-11-2001</td>
+                <td className="py-2 px-4 border-b"><button><MdModeEdit size={25} /></button></td>
+                <td className="py-2 px-4 border-b"><button><MdDelete size={25} /></button></td>
+              </tr>
+            ))}
+
+
           </tbody>
         </table>
       </div>
