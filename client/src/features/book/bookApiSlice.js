@@ -36,6 +36,12 @@ export const bookApiSlice = apiSlice.injectEndpoints({
         params: { uID }  // Use query parameters
       })
     }),
+    getAllBooks: builder.mutation({
+      query: credentials => ({
+        url:'/api/books',
+        method:'GET'
+      }) 
+    })
   })
 })
 

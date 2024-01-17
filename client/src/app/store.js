@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./api/apiSlice";
 import authReducer from '../features/auth/authSlice'
+import adminReducer from "../features/admin/adminSlice"
 import themeReducer from '../features/theme/themeSlice'
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
@@ -25,7 +26,8 @@ export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: persistedReducer,
-    theme: themeReducer
+    theme: themeReducer,
+    admin: adminReducer
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(
     {

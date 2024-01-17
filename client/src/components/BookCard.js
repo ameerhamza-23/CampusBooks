@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import Avatar from "./Avatar";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import { useAddToWishlistMutation } from "../features/book/bookApiSlice";
 
-export default function BookCard() {
+export default function BookCard({book_details}) {
 
+
+  const [addToWS] = useAddToWishlistMutation()
   const [flag, setFlag] = useState(false)
-  const addToWishlist = async() => {
+
+  const addToWishlist = async(bID) => {
+    console.log(bID)
     setFlag(!flag)
   }
+ 
+
 
   return (
     <div className="w-96 relative mx-auto sm:mx-0">
@@ -23,7 +30,7 @@ export default function BookCard() {
               <h2 className="text-wrap overflow-x-hidden">Computer Networks</h2>
               <h1 className="font-bold">Rs 500</h1>
           </div>
-          <span onClick={addToWishlist} className="flex items-center hover:cursor-pointer">{!flag ? <FaRegHeart /> : <FaHeart color={'#9370DB'} />}</span>
+          <span onClick={()=> addToWishlist(book_details.bID)} className="flex items-center hover:cursor-pointer">{!flag ? <FaRegHeart /> : <FaHeart color={'#9370DB'} />}</span>
         </div>
       </div>
       <div className="absolute -top-5 -right-5">
