@@ -1,12 +1,13 @@
 import Avatar from "../Avatar"
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { useGetAllUsersMutation } from "../../features/admin/adminApiSlice";
+import { useGetAllUsersMutation, useDeleteUserMutation } from "../../features/admin/adminApiSlice";
 import { useEffect, useState } from "react";
 
 export default function Users() {
 
   const [getAllUsers] = useGetAllUsersMutation()
+  const [deleteUser] = useDeleteUserMutation()
   const [users, setUsers] = useState([])
 
   useEffect(() => {
@@ -25,6 +26,16 @@ export default function Users() {
     getUsers()
 
   }, [])
+
+  const deleteUserWrapper = async(uid)=> {
+    try {
+      const response = await deleteUser({uID:uid}).unwrap()
+      console.log("response: ",response)
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
 
   return (
 
@@ -62,7 +73,7 @@ export default function Users() {
                 <td className="py-2 px-4 border-b">Active</td>
                 <td className="py-2 px-4 border-b">23-11-2001</td>
                 <td className="py-2 px-4 border-b"><button><MdModeEdit size={25} /></button></td>
-                <td className="py-2 px-4 border-b"><button><MdDelete size={25} /></button></td>
+                <td className="py-2 px-4 border-b"><button onClick={()=> deleteUserWrapper(user.id)} ><MdDelete size={25} /></button></td>
               </tr>
             ))}
 

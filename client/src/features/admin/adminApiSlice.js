@@ -16,14 +16,14 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     }),
     deleteUser: builder.mutation({
       query: ({ uID }) => ({  
-        url: `api/admin/user`,
+        url: `api/admin/users`,
         method: 'DELETE',
         params: { uID }  // Use query parameters
       })
     }),
     deleteBook: builder.mutation({
       query: ({ bID }) => ({
-        url: `api/admin/book`,
+        url: `api/admin/books`,
         method: 'DELETE',
         params: { bID }  // Use query parameters
       })

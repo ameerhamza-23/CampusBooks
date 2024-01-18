@@ -1,12 +1,12 @@
 import Avatar from "../Avatar"
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { useGetAllBooksMutation } from "../../features/admin/adminApiSlice";
+import { useGetAllBooksMutation, useDeleteBookMutation } from "../../features/admin/adminApiSlice";
 import { useEffect, useState } from "react";
-
 export default function Books() {
 
   const [getAllBooks] = useGetAllBooksMutation()
+  const [deleteBook] = useDeleteBookMutation()
   const [books, setBooks] = useState([])
 
   useEffect(() => {
@@ -27,6 +27,19 @@ export default function Books() {
     getBooks()
 
   }, [])
+
+  const deleteBookWrapper = async(bid) => {
+    try {
+
+      const result = await deleteBook({bID:bid}).unwrap()
+      console.log("result: ")
+      //books = books.filter((book)=> book.bid !== result.bid)
+
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
 
   return (
 
@@ -66,7 +79,7 @@ export default function Books() {
                 <td className="py-2 px-4 border-b">Hamza</td>
                 <td className="py-2 px-4 border-b">23-11-2001</td>
                 <td className="py-2 px-4 border-b"><button><MdModeEdit size={25} /></button></td>
-                <td className="py-2 px-4 border-b"><button><MdDelete size={25} /></button></td>
+                <td className="py-2 px-4 border-b"><button onClick={(()=> {deleteBookWrapper(book.bid)})}><MdDelete size={25} /></button></td>
               </tr>
             ))}
 
