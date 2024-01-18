@@ -18,7 +18,7 @@ export const bookApiSlice = apiSlice.injectEndpoints({
     addToWishlist: builder.mutation({
       query: ({ bID, uID }) => ({  
         url: `api/books/save`,
-        method: 'GET',
+        method: 'POST',
         params: { bID, uID }  // Use query parameters
       })
     }),

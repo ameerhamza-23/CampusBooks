@@ -3,16 +3,24 @@ import Avatar from "./Avatar";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useAddToWishlistMutation } from "../features/book/bookApiSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../features/auth/authSlice";
 
 export default function BookCard({book}) {
 
-
+  const user = useSelector(selectCurrentUser)
   const [addToWS] = useAddToWishlistMutation()
   const [flag, setFlag] = useState(false)
 
   const addToWishlist = async(bID) => {
-    console.log(bID)
-    setFlag(!flag)
+    try {
+      const response = await addToWS({uID:user.id, bID:bID}).unwrap()
+      console.log(response)
+      setFlag(!flag)
+    }
+    catch(err) {
+      console.log(err)
+    }
   }
  
 
