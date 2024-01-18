@@ -44,7 +44,7 @@ function Wishlist() {
   }
 
   return (
-    <div className='p-10 flex flex-col items-center' style={{ height: '87vh' }}>
+    <div className={!loading ? 'p-10 flex flex-col items-center': 'p-10 flex justify-center items-center'} style={{ height: '87vh' }}>
 
       {loading ? <><TailSpin /></> : <><h1 className='font-bold text-4xl text-purple-300'>Wishlist</h1>
 
