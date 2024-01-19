@@ -90,8 +90,8 @@ const getBook = async (req, res) => {
 
   try {
     const { id } = req.query
-    console.log("bookid: ", id)
-    return res.status(200).json({ message: "working" })
+    const result = await pool.query("SELECT * FROM book_details WHERE bID = $1", [id])
+    return res.status(200).json(result.rows[0])
   }
   catch (err) {
     console.log(err)
