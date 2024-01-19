@@ -50,7 +50,7 @@ function Home() {
       <div className='mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10'>
 
         {books && books.map((book) => (
-          <Link to={`/bookdetails/${book.bid}`} >
+          <Link to={`/bookdetails/${book.bid}`} key={book.bid} >
             <BookCard book={book} key={book.bid} />
           </Link>
         ))}

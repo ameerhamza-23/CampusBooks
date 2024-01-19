@@ -10,13 +10,13 @@ export const bookApiSlice = apiSlice.injectEndpoints({
       })
     }),
     deleteBook: builder.mutation({
-      query: ({ bID }) => ({  
-        url: `/api/books/delete/${bID}`,  
+      query: ({ bID }) => ({
+        url: `/api/books/delete/${bID}`,
         method: 'DELETE',
       })
     }),
     addToWishlist: builder.mutation({
-      query: ({ bID, uID }) => ({  
+      query: ({ bID, uID }) => ({
         url: `api/books/save`,
         method: 'POST',
         params: { bID, uID }  // Use query parameters
@@ -38,9 +38,17 @@ export const bookApiSlice = apiSlice.injectEndpoints({
     }),
     getAllBooks: builder.mutation({
       query: credentials => ({
-        url:'/api/books',
-        method:'GET'
-      }) 
+        url: '/api/books',
+        method: 'GET'
+      })
+    }),
+    getBook: builder.mutation({
+      query: ({ id }) => ({
+        url: `api/books/${id}`,
+        method: 'GET',
+        params: { id }
+      })
+
     })
   })
 })
@@ -51,5 +59,6 @@ export const {
   useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
   useGetWishlistMutation,
-  useGetAllBooksMutation
+  useGetAllBooksMutation,
+  useGetBookMutation,
 } = bookApiSlice;
