@@ -18,9 +18,7 @@ function Home() {
       try {
   
         const result = await getAllBooks().unwrap()
-        console.log("result : ",result)
         setBooks(result)
-        console.log(books);
   
       }
       catch(err) {

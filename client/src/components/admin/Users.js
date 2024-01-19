@@ -15,7 +15,6 @@ export default function Users() {
       try {
         const result = await getAllUsers().unwrap()
         setUsers(result)
-        console.log(result)
       }
       catch (err) {
         console.log(err)
