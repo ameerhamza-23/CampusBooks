@@ -9,19 +9,19 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       })
     }),
     getAllBooks: builder.mutation({
-      query: credentials => ({  
-        url: `/api/admin/books/`,  
+      query: credentials => ({
+        url: `/api/admin/books/`,
         method: 'GET',
       })
     }),
     deleteUser: builder.mutation({
-      query: ({ uID }) => ({  
+      query: ({ uID }) => ({
         url: `api/admin/users`,
         method: 'DELETE',
         params: { uID }  // Use query parameters
       })
     }),
-    deleteBook: builder.mutation({
+    deleteOneBook: builder.mutation({
       query: ({ bID }) => ({
         url: `api/admin/books`,
         method: 'DELETE',
@@ -49,7 +49,7 @@ export const {
   useGetAllUsersMutation,
   useGetAllBooksMutation,
   useDeleteUserMutation,
-  useDeleteBookMutation,
+  useDeleteOneBookMutation,
   useFilterUsersMutation,
   useFilterBooksMutation,
 } = adminApiSlice;

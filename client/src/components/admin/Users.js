@@ -2,19 +2,23 @@
 import { useGetAllUsersMutation } from "../../features/admin/adminApiSlice";
 import { useEffect, useState } from "react";
 import UserRow from "./UserRow"
+import { setUsers, selectUsers } from "../../features/admin/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Users() {
 
   const [getAllUsers] = useGetAllUsersMutation()
   
-  const [users, setUsers] = useState([])
+  //const [users, setUsers] = useState([])
+  const dispatch = useDispatch()
+  const users = useSelector(selectUsers)
 
   useEffect(() => {
 
     const getUsers = async () => {
       try {
         const result = await getAllUsers().unwrap()
-        setUsers(result)
+        dispatch(setUsers(result))
       }
       catch (err) {
         console.log(err)

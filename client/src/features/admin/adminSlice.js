@@ -16,7 +16,7 @@ const adminSlice = createSlice({
     setBooks: (state, action) => {
       state.books = action.payload
     },
-    
+
     // Getter reducers
     getUsers: (state) => {
       return state.users;
@@ -33,5 +33,8 @@ export const {
   getUsers,
   getBooks,
 } = adminSlice.actions;
+
+export const selectUsers = (state) => state.admin.users;
+export const selectBooks = (state) => state.admin.books;
 
 export default adminSlice.reducer;
